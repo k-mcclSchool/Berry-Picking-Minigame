@@ -90,7 +90,7 @@ public class berryPickingMinigame extends AppCompatActivity {
 
                         new CountDownTimer(11000, 1000) {
                             public void onTick(long millisUntilFinished) {
-                                btime.setText(String.valueOf(millisUntilFinished / 1000));
+                                btime.setText("Time: " + String.valueOf(millisUntilFinished / 1000));
 
                             }
 
@@ -98,7 +98,10 @@ public class berryPickingMinigame extends AppCompatActivity {
                             public void onFinish() {
                                 counter1.setElevation(Float.parseFloat("40"));
                                 counter1.setVisibility(View.VISIBLE);
-
+                                berry1.setVisibility(View.INVISIBLE);
+                                berry2.setVisibility(View.INVISIBLE);
+                                berry3.setVisibility(View.INVISIBLE);
+                                berry4.setVisibility(View.INVISIBLE);
                                 counter1.setText("END");
                                 miniGameRunning = false;
                             }
@@ -110,13 +113,13 @@ public class berryPickingMinigame extends AppCompatActivity {
 
 
 
-        //food = food + 10* berries picked.;
+        //food = food + 5 * berries picked.;
     }
 
     private void berryPicked(){
         if(miniGameRunning){
             numOfBerryPicked++;
-            score.setText("Food Collected: " + String.valueOf(numOfBerryPicked * 10));
+            score.setText("Food Collected: " + String.valueOf(numOfBerryPicked * 5));
         }
     }
 
