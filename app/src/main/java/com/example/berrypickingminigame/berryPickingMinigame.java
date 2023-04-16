@@ -7,23 +7,23 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
 import androidx.appcompat.app.AppCompatActivity;
-
-import java.util.Arrays;
 
 public class berryPickingMinigame extends AppCompatActivity {
     int miniGame;
     ImageButton button;
     TextView textView;
     EditText editText;
+    TextView score;
 
-    int berrysPicked = 0;
-    int berrytimer = 3;
+    int numOfBerryPicked = 0;
+    int BERRY_TIMER = 3;
     int i = 0;
     int food = 0;
+    private String output;
+    private Boolean miniGameRunning = false;
 
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -32,24 +32,42 @@ public class berryPickingMinigame extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        String output;
-        {
-            output = "Food Collected: " + String.valueOf(berrysPicked * 10);
-        }
-
         ImageButton berry1 = findViewById(R.id.imageButton);
         ImageButton berry2 = findViewById(R.id.imageButton2);
         ImageButton berry3 = findViewById(R.id.imageButton3);
         ImageButton berry4 = findViewById(R.id.imageButton4);
         TextView btime = findViewById(R.id.textView3);
-        TextView score = findViewById(R.id.berryscore);
+        score = findViewById(R.id.berryscore);
         TextView counter1 = findViewById(R.id.centerTimer);
 
+        berry1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                berryPicked();
+            }
+        });
+        berry2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                berryPicked();
+            }
+        });
+        berry3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                berryPicked();
+            }
+        });
+        berry4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                berryPicked();
+            }
+        });
 
-        counter1.setElevation(Float.parseFloat("40dp"));
+        counter1.setElevation(Float.parseFloat("40.0"));
         new CountDownTimer(3000, 1000) {
-            private int berrytimer = this.berrytimer;
+            int berrytimer = BERRY_TIMER;
 
             public void onTick(long millisUntilFinished) {
 
@@ -65,58 +83,41 @@ public class berryPickingMinigame extends AppCompatActivity {
                     }
 
                     public void onFinish() {
-                        counter1.setElevation(Float.parseFloat("-40dp"));
+                        counter1.setElevation(Float.parseFloat("-40.0"));
 
                         counter1.setVisibility(View.INVISIBLE);
+                        miniGameRunning = true;
+
+                        new CountDownTimer(11000, 1000) {
+                            public void onTick(long millisUntilFinished) {
+                                btime.setText(String.valueOf(millisUntilFinished / 1000));
+
+                            }
+
+                            @SuppressLint("SetTextI18n")
+                            public void onFinish() {
+                                counter1.setElevation(Float.parseFloat("40"));
+                                counter1.setVisibility(View.VISIBLE);
+
+                                counter1.setText("END");
+                                miniGameRunning = false;
+                            }
+                        }.start();
                     }
                 }.start();
             }
         }.start();
 
 
-        new CountDownTimer(10000, 1000) {
-            private final int berrytimer = this.berrytimer;
 
-            public void onTick(long millisUntilFinished) {
-                btime.setText(String.valueOf(1 + millisUntilFinished / 1000));
-                berry1.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        berrysPicked = berrysPicked + 1;
-                        score.setText(output);
-                    }
-                });
-                berry2.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        berrysPicked++;
-                        score.setText(output);
-                    }
-                });
-                berry3.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        berrysPicked = berrysPicked + 1;
-                        score.setText(output);
-                    }
-                });
-                berry4.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        berrysPicked = berrysPicked + 1;
-                        score.setText(output);
-                    }
-                });
-            }
-
-            @SuppressLint("SetTextI18n")
-            public void onFinish() {
-                counter1.setElevation(Float.parseFloat("40dp"));
-                counter1.setVisibility(View.VISIBLE);
-
-                counter1.setText("END");
-            }
-        }.start();
         //food = food + 10* berries picked.;
     }
+
+    private void berryPicked(){
+        if(miniGameRunning){
+            numOfBerryPicked++;
+            score.setText("Food Collected: " + String.valueOf(numOfBerryPicked * 10));
+        }
+    }
+
 }
