@@ -4,12 +4,17 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.view.Window;
 import android.view.WindowManager;
 import androidx.appcompat.app.AppCompatActivity;
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
+import android.view.ViewGroup.MarginLayoutParams;
 
 public class berryPickingMinigame extends AppCompatActivity {
     int miniGame;
@@ -20,12 +25,17 @@ public class berryPickingMinigame extends AppCompatActivity {
 
     int numOfBerryPicked = 0;
     int BERRY_TIMER = 3;
+    int GAMETIME = 5; // how long the game runs for
+    int GAMETIMEMS = GAMETIME * 1000;
     int i = 0;
     int food = 0;
     private String output;
     private Boolean miniGameRunning = false;
+    Random rand = new Random();
 
     protected void onCreate(Bundle savedInstanceState) {
+
+
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide();
@@ -44,24 +54,28 @@ public class berryPickingMinigame extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 berryPicked();
+                moveBerry(berry1);
             }
         });
         berry2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 berryPicked();
+                moveBerry(berry2);
             }
         });
         berry3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 berryPicked();
+                moveBerry(berry3);
             }
         });
         berry4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 berryPicked();
+                moveBerry(berry4);
             }
         });
 
@@ -71,61 +85,68 @@ public class berryPickingMinigame extends AppCompatActivity {
         makeInvisible(berry2);
         makeInvisible(berry3);
         makeInvisible(berry4);
-        new CountDownTimer(3000, 1000) {
-            int berrytimer = BERRY_TIMER;
 
-            public void onTick(long millisUntilFinished) {
+        new CountDownTimer(1200, 600) {
 
-                counter1.setText(String.valueOf(this.berrytimer));
-                this.berrytimer--;
+            @SuppressLint("SetTextI18n")
+            public void onTick(long milisUntilFinished) {
+                counter1.setText("Berry Picking Minigame");
             }
 
-            // COUNTDOWN FINSISHES
-            public void onFinish() {
-                new CountDownTimer(1000, 1000) {
+            public void onFinish(){
 
+                new CountDownTimer(1800,600) {
+                    int berrytimer = BERRY_TIMER;
 
-                    // GAME STARTS
-                    @SuppressLint("SetTextI18n")
-                    public void onTick(long millisUntilFinished) {
-                        counter1.setText("Go!!");
+                    public void onTick ( long millisUntilFinished){
+                        counter1.setText(String.valueOf(this.berrytimer));
+                        this.berrytimer--;
                     }
+                    // COUNTDOWN FINISHES
+                    public void onFinish () {
+                        new CountDownTimer(600, 600) {
 
-                    public void onFinish() {
-                        makeVisible(berry1);
-                        makeVisible(berry2);
-                        makeVisible(berry3);
-                        makeVisible(berry4);
-                        counter1.setVisibility(View.INVISIBLE);
-                        counter1.setElevation(Float.parseFloat("-40.0"));
-                        miniGameRunning = true;
 
-                        new CountDownTimer(11000, 1000) {
+                            // GAME STARTS
+                            @SuppressLint("SetTextI18n")
                             public void onTick(long millisUntilFinished) {
-                                btime.setText(String.valueOf(millisUntilFinished / 1000));
-
+                                counter1.setText("Go!!");
                             }
 
-                            // GAME FINISHES
-                            @SuppressLint("SetTextI18n")
                             public void onFinish() {
-                                makeInvisible(berry1);
-                                makeInvisible(berry2);
-                                makeInvisible(berry3);
-                                makeInvisible(berry4);
-                                counter1.setElevation(Float.parseFloat("40"));
-                                counter1.setVisibility(View.VISIBLE);
-                                counter1.setText("Finished!");
-                                miniGameRunning = false;
+                                makeVisible(berry1);
+                                makeVisible(berry2);
+                                makeVisible(berry3);
+                                makeVisible(berry4);
+                                counter1.setVisibility(View.INVISIBLE);
+                                counter1.setElevation(Float.parseFloat("-40.0"));
+                                miniGameRunning = true;
+
+                                new CountDownTimer(GAMETIMEMS + 1000, 1000) {
+                                    public void onTick(long millisUntilFinished) {
+                                        btime.setText(String.valueOf(millisUntilFinished / 1000));
+
+                                    }
+
+                                    // GAME FINISHES
+                                    @SuppressLint("SetTextI18n")
+                                    public void onFinish() {
+                                        makeInvisible(berry1);
+                                        makeInvisible(berry2);
+                                        makeInvisible(berry3);
+                                        makeInvisible(berry4);
+                                        counter1.setElevation(Float.parseFloat("40"));
+                                        counter1.setVisibility(View.VISIBLE);
+                                        counter1.setText("Finished!");
+                                        miniGameRunning = false;
+                                    }
+                                }.start();
                             }
                         }.start();
                     }
                 }.start();
             }
         }.start();
-
-
-
         //food = food + 5 * berries picked.;
     }
 
@@ -136,14 +157,34 @@ public class berryPickingMinigame extends AppCompatActivity {
         }
     }
 
+    private void moveBerry(ImageButton img){
+        makeInvisible(img);
+        //img.setMarginTop(48 + rand.nextInt(208-48));
+        //img.setMarginEnd(52 + rand.nextInt(404-52));
+
+        final Timer t = new java.util.Timer();
+        t.schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+                        makeVisible(img);
+                        t.cancel();
+                    }
+                },
+                800
+        );
+    }
+
     private void makeVisible(ImageButton img){
         img.setElevation(Float.parseFloat("3"));
         img.setVisibility(View.VISIBLE);
     }
     private void makeInvisible(ImageButton img){
-        img.setElevation(Float.parseFloat("-3"));
+        img.setElevation(Float.parseFloat("-10"));
         img.setVisibility(View.INVISIBLE);
 
     }
+
+
 
 }
