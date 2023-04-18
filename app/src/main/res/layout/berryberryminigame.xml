@@ -8,10 +8,10 @@
 
     <ImageButton
         android:id="@+id/imageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="184dp"
-        android:layout_marginTop="76dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="192dp"
+        android:layout_marginTop="116dp"
         android:elevation="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -19,10 +19,10 @@
 
     <ImageButton
         android:id="@+id/imageButton2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="496dp"
-        android:layout_marginTop="56dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="508dp"
+        android:layout_marginTop="104dp"
         android:elevation="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -30,8 +30,8 @@
 
     <ImageButton
         android:id="@+id/imageButton4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_marginStart="496dp"
         android:layout_marginTop="236dp"
         android:elevation="10dp"
@@ -41,10 +41,10 @@
 
     <ImageButton
         android:id="@+id/imageButton3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="184dp"
-        android:layout_marginTop="252dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="192dp"
+        android:layout_marginTop="248dp"
         android:elevation="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -52,51 +52,54 @@
 
     <TextView
         android:id="@+id/berryscore"
-        android:layout_width="140dp"
-        android:layout_height="42dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="60dp"
+        android:layout_width="60dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="140dp"
+        android:layout_marginBottom="120dp"
         android:elevation="10dp"
-        android:text="Food Collected: 0"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="0"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintBottom_toTopOf="@+id/centerTimer"
+        app:layout_constraintStart_toEndOf="@+id/centerTimer" />
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="162dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="40dp"
+        android:layout_height="37dp"
+        android:layout_marginEnd="180dp"
+        android:layout_marginBottom="116dp"
         android:elevation="10dp"
-        android:text="Time: 10"
-        app:autoSizeTextType="none"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="10"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintBottom_toTopOf="@+id/centerTimer"
+        app:layout_constraintEnd_toEndOf="@+id/centerTimer" />
 
     <TextView
         android:id="@+id/centerTimer"
         android:layout_width="188dp"
         android:layout_height="65dp"
         android:elevation="40dp"
-        android:text="Mid Text"
+        android:text="Center Box"
         android:visibility="visible"
         app:autoSizeTextType="uniform"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.499"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.536" />
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="900dp"
-        android:layout_height="500dp"
+        android:layout_width="835dp"
+        android:layout_height="393dp"
         android:elevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.196"
+        app:layout_constraintVertical_bias="0.505"
         app:srcCompat="@drawable/berrybackground" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

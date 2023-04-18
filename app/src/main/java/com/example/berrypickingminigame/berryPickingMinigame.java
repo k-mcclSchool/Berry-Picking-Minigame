@@ -102,7 +102,7 @@ public class berryPickingMinigame extends AppCompatActivity {
 
                         new CountDownTimer(11000, 1000) {
                             public void onTick(long millisUntilFinished) {
-                                btime.setText("Time: " + String.valueOf(millisUntilFinished / 1000));
+                                btime.setText(String.valueOf(millisUntilFinished / 1000));
 
                             }
 
@@ -115,7 +115,7 @@ public class berryPickingMinigame extends AppCompatActivity {
                                 makeInvisible(berry4);
                                 counter1.setElevation(Float.parseFloat("40"));
                                 counter1.setVisibility(View.VISIBLE);
-                                counter1.setText("END");
+                                counter1.setText("Finished!");
                                 miniGameRunning = false;
                             }
                         }.start();
