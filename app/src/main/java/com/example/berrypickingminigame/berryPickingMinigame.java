@@ -132,7 +132,7 @@ public class berryPickingMinigame extends AppCompatActivity {
     private void berryPicked(){
         if(miniGameRunning){
             numOfBerryPicked++;
-            score.setText("Food Collected: " + String.valueOf(numOfBerryPicked * 5));
+            score.setText(String.valueOf(numOfBerryPicked * 5));
         }
     }
 
