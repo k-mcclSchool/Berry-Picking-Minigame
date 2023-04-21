@@ -3,6 +3,7 @@ package com.example.berrypickingminigame;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -25,8 +26,9 @@ public class berryPickingMinigame extends AppCompatActivity {
 
     int numOfBerryPicked = 0;
     int BERRY_TIMER = 3;
-    int GAMETIME = 5; // how long the game runs for
+    int GAMETIME = 10; // how long the game runs for
     int GAMETIMEMS = GAMETIME * 1000;
+    double BERRY_DELAY = 0.6;  //seconds until berry re-appears.
     int i = 0;
     int food = 0;
     private String output;
@@ -93,17 +95,18 @@ public class berryPickingMinigame extends AppCompatActivity {
                 counter1.setText("Berry Picking Minigame");
             }
 
-            public void onFinish(){
+            public void onFinish() {
 
-                new CountDownTimer(1800,600) {
+                new CountDownTimer(1800, 600) {
                     int berrytimer = BERRY_TIMER;
 
-                    public void onTick ( long millisUntilFinished){
+                    public void onTick(long millisUntilFinished) {
                         counter1.setText(String.valueOf(this.berrytimer));
                         this.berrytimer--;
                     }
+
                     // COUNTDOWN FINISHES
-                    public void onFinish () {
+                    public void onFinish() {
                         new CountDownTimer(600, 600) {
 
 
@@ -131,6 +134,7 @@ public class berryPickingMinigame extends AppCompatActivity {
                                     // GAME FINISHES
                                     @SuppressLint("SetTextI18n")
                                     public void onFinish() {
+                                        miniGameRunning = false;
                                         makeInvisible(berry1);
                                         makeInvisible(berry2);
                                         makeInvisible(berry3);
@@ -150,18 +154,30 @@ public class berryPickingMinigame extends AppCompatActivity {
         //food = food + 5 * berries picked.;
     }
 
-    private void berryPicked(){
-        if(miniGameRunning){
+    private void berryPicked() {
+        if (miniGameRunning) {
             numOfBerryPicked++;
             score.setText(String.valueOf(numOfBerryPicked * 5));
         }
     }
 
-    private void moveBerry(ImageButton img){
+    private void moveBerry(ImageButton img) {
+        int berryDelay = BERRY_TIMER * 1000;
         makeInvisible(img);
         //img.setMarginTop(48 + rand.nextInt(208-48));
         //img.setMarginEnd(52 + rand.nextInt(404-52));
 
+
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (miniGameRunning) {
+                    makeVisible(img);
+                }
+            }
+        }, berryDelay);
+        /*
         final Timer t = new java.util.Timer();
         t.schedule(
                 new java.util.TimerTask() {
@@ -171,20 +187,18 @@ public class berryPickingMinigame extends AppCompatActivity {
                         t.cancel();
                     }
                 },
-                800
-        );
+                1000, 500
+        );*/
     }
 
-    private void makeVisible(ImageButton img){
-        img.setElevation(Float.parseFloat("3"));
+    private void makeVisible(ImageButton img) {
+        img.setElevation(Float.parseFloat("1"));
         img.setVisibility(View.VISIBLE);
     }
-    private void makeInvisible(ImageButton img){
+
+    private void makeInvisible(ImageButton img) {
         img.setElevation(Float.parseFloat("-10"));
         img.setVisibility(View.INVISIBLE);
 
     }
-
-
-
 }
